@@ -53,56 +53,56 @@ export class AppComponent implements OnInit {
 
 
   showMenu = false;
-  config: SwiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 50,
-    navigation: true,
-    pagination: { clickable: true },
-    scrollbar: { draggable: true },
-    cssMode: true,
-    breakpoints: {
-      // when window width is >= 320px
-      568: {
-        slidesPerView: 2,
-        spaceBetween: 20
-      },
-      // when window width is >= 480px
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 30
-      },
-      1024: {
-        slidesPerView: 3,
-        spaceBetween: 10
+    config: SwiperOptions = {
+      slidesPerView: 1,
+      spaceBetween: 50,
+      navigation: true,
+      pagination: { clickable: true },
+      scrollbar: { draggable: true },
+      cssMode: true,
+      breakpoints: {
+        // when window width is >= 320px
+        568: {
+          slidesPerView: 2,
+          spaceBetween: 20
+        },
+        // when window width is >= 480px
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 10
+        }
       }
+    };
+
+    // change colors of nav while scrolling  *******************
+    sections = document.querySelectorAll<HTMLElement>('section[id]');
+
+    scrollActive() {
+      this.sections = document.querySelectorAll<HTMLElement>('section[id]');
+      const scrolly = window.pageYOffset;
+      this.sections.forEach((current) => {
+        const sectionHeight = current.offsetHeight;
+        const sectionTop = current.offsetTop - 300;
+        const sectionId = current.getAttribute('id');
+
+        if (scrolly > sectionTop && scrolly <= sectionTop + sectionHeight) {
+          const elt = document.querySelector(
+            '.nav__menu a[href*=' + sectionId + ']'
+          ) as HTMLElement;
+
+          elt.classList.add('active-link');
+        } else {
+          const elt = document.querySelector(
+            '.nav__menu a[href*=' + sectionId + ']'
+          ) as HTMLElement;
+          elt.classList.remove('active-link');
+        }
+      });
     }
-  };
-
-  // change colors of nav while scrolling  *******************
-  sections = document.querySelectorAll<HTMLElement>('section[id]');
-
-  scrollActive() {
-    this.sections = document.querySelectorAll<HTMLElement>('section[id]');
-    const scrolly = window.pageYOffset;
-    this.sections.forEach((current) => {
-      const sectionHeight = current.offsetHeight;
-      const sectionTop = current.offsetTop - 300;
-      const sectionId = current.getAttribute('id');
-
-      if (scrolly > sectionTop && scrolly <= sectionTop + sectionHeight) {
-        const elt = document.querySelector(
-          '.nav__menu a[href*=' + sectionId + ']'
-        ) as HTMLElement;
-
-        elt.classList.add('active-link');
-      } else {
-        const elt = document.querySelector(
-          '.nav__menu a[href*=' + sectionId + ']'
-        ) as HTMLElement;
-        elt.classList.remove('active-link');
-      }
-    });
-  }
 
   // SCROLL HEADER JS ***************************************
   scrollHeader() {
